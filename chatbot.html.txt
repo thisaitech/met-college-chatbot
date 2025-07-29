@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Chatbot</title>
+<style>
+body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+#chatbox { width: 100%; height: 300px; border: 1px solid #ccc; padding: 10px; overflow-y: scroll; background: #fff; }
+#userInput { width: 80%; padding: 10px; }
+#sendBtn { padding: 10px; }
+</style>
+</head>
+<body>
+
+<h2>Simple Chatbot</h2>
+<div id="chatbox"></div><br>
+<input type="text" id="userInput" placeholder="Type a message..." />
+<button id="sendBtn">Send</button>
+
+<script>
+const chatbox = document.getElementById('chatbox');
+const userInput = document.getElementById('userInput');
+const sendBtn = document.getElementById('sendBtn');
+
+function addMessage(sender, text) {
+chatbox.innerHTML += `<p><strong>${sender}:</strong> ${text}</p>`;
+chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+function getBotResponse(input) {
+const msg = input.toLowerCase();
+if (msg.includes("hello") || msg.includes("hi")) {
+return "Hello! How can I help you?";
+} else if (msg.includes("how are you")) {
+return "I'm just a chatbot, but I'm doing great!";
+} else if (msg.includes("bye")) {
+return "Goodbye! Have a nice day.";
+} else {
+return "Sorry, I didn't understand that.";
+}
+}
+
+sendBtn.onclick = () => {
+const input = userInput.value.trim();
+if (input) {
+addMessage("You", input);
+const response = getBotResponse(input);
+setTimeout(() => addMessage("Bot", response), 500);
+userInput.value = "";
+}
+};
+
+userInput.addEventListener("keypress", function(e) {
+if (e.key === "Enter") sendBtn.click();
+});
+</script>
+
+</body>
+</html>
